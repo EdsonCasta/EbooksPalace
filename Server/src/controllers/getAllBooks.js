@@ -1,11 +1,12 @@
 const { Book } = require('../db');
 const pagination = require('./pagination');
 const booksByName = require("./getBooksByName")
+const { sortBooksAlphabetically, filterByPrice } = require("./filtersOrder")
 const { filterByEditorial, filterByCategory, filterByAuthor } = require('./filters');
 
 const allBooks = async (req, res) => {
 
-    const { name, page = 1, productsByPage = 30, editorial, category, author } = req.query;
+    const { name, page = 1, productsByPage = 30, editorial, category, author, order, sort } = req.query;
 
     try {
 
@@ -31,6 +32,14 @@ const allBooks = async (req, res) => {
 
         if (filteredBooks.length === 0) {
             return res.status(404).json({ message: "No se encontraron libros que coincidan con los filtros." });
+        }
+
+        if (order) {
+            filteredBooks = await sortBooksAlphabetically(filteredBooks, order);
+        }
+
+        if (sort) {
+            filteredBooks = await filterByPrice(filteredBooks, sort);
         }
 
         let paginatedResult;
