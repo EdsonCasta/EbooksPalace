@@ -5,6 +5,7 @@ const saveBooks = async () => {
     try {
         const { data } = await axios("http://127.0.0.1:5500/datosEBookspalace.json");
 
+
         for (let book of data) {
             Book.create({
                 id: book.id,
