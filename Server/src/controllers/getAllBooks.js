@@ -1,16 +1,21 @@
 const { Book } = require('../db');
 const pagination = require('./pagination');
+const booksByName = require("./getBooksByName")
 const { filterByEditorial, filterByCategory, filterByAuthor } = require('./filters');
 
 const allBooks = async (req, res) => {
 
-    const { page = 1, productsByPage = 30, editorial, category, author } = req.query;
+    const { name, page = 1, productsByPage = 30, editorial, category, author } = req.query;
 
     try {
 
-        const books = await Book.findAll();
+        let books = await Book.findAll();
 
         let filteredBooks = books;
+
+        if (name) {
+            filteredBooks = await booksByName(name)
+        }
 
         if (editorial) {
             filteredBooks = filterByEditorial(filteredBooks, editorial);
