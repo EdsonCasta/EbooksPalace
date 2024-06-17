@@ -42,6 +42,8 @@ const allBooks = async (req, res) => {
             filteredBooks = await filterByPrice(filteredBooks, sort);
         }
 
+        const totalPages = Math.ceil(filteredBooks.length / productsByPage);
+
         let paginatedResult;
         try {
             paginatedResult = pagination(filteredBooks, page, productsByPage);
@@ -49,7 +51,7 @@ const allBooks = async (req, res) => {
             return res.status(400).json({ error: paginationError.message });
         }
 
-        return res.status(200).json(paginatedResult);
+        return res.status(200).json({ totalPages, books: paginatedResult });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
