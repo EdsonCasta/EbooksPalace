@@ -31,4 +31,26 @@ const filterByAuthor = (books, partialAuthor) => {
     }
 };
 
-module.exports = { filterByEditorial, filterByCategory, filterByAuthor };
+const filterPriceRange = (books, minimo, maximo) => {
+    let filteredBooks = [];
+
+    if (minimo !== undefined && maximo !== undefined) {
+        filteredBooks = books.filter(book => {
+            return book.price >= parseFloat(minimo) && book.price <= parseFloat(maximo);
+        });
+    } else if (minimo !== undefined) {
+        filteredBooks = books.filter(book => {
+            return book.price >= parseFloat(minimo);
+        });
+    } else if (maximo !== undefined) {
+        filteredBooks = books.filter(book => {
+            return book.price <= parseFloat(maximo);
+        });
+    } else {
+        filteredBooks = books;
+    }
+
+    return filteredBooks;
+};
+
+module.exports = { filterByEditorial, filterByCategory, filterByAuthor, filterPriceRange };
