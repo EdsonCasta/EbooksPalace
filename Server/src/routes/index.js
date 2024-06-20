@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const allBooks = require('../controllers/getAllBooks');
+const { getAllUsers } = require("../controllers/getAllUsers")
 const booksById = require('../controllers/getBooksById');
 const booksByName = require('../controllers/getBooksByName');
 const pagination = require('../controllers/pagination');
@@ -23,9 +24,10 @@ router.get('/category', filterByCategory);
 router.get('/author', filterByAuthor);
 router.get('/price', filterByPrice);
 router.get('/alphabetical/:order', sortBooksAlphabetically);
+router.get('/users', getAllUsers);
 router.post('/signup', createUser);
 router.post('/login', login);
-router.post('/books', postNewBook)
-router.post('/userverify', verifyUser)
+router.post('/books', postNewBook);
+router.post('/userverify', verifyUser);
 
 module.exports = router;
