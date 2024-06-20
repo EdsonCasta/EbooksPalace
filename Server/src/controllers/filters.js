@@ -1,3 +1,18 @@
+const filterByGeneralSearch = (books, searchValue) => {
+    try {
+        return books.filter(book => {
+            const searchLower = searchValue.toLowerCase();
+            return (
+                book.name.toLowerCase().includes(searchLower) ||
+                book.author.toLowerCase().includes(searchLower) ||
+                book.editorial.toLowerCase().includes(searchLower)
+            );
+        });
+    } catch (error) {
+        throw new Error('Error al filtrar por búsqueda general');
+    }
+};
+
 const filterByEditorial = (books, partialEditorial) => {
     try {
         return books.filter(book => {
@@ -53,4 +68,4 @@ const filterPriceRange = (books, minimo, maximo) => {
     return filteredBooks;
 };
 
-module.exports = { filterByEditorial, filterByCategory, filterByAuthor, filterPriceRange };
+module.exports = { filterByGeneralSearch, filterByEditorial, filterByCategory, filterByAuthor, filterPriceRange };
