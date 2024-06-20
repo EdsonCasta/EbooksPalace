@@ -7,7 +7,7 @@ const user = (sequelize) => {
             autoIncrement: true,
             primaryKey: true
         },
-        username: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
@@ -17,7 +17,7 @@ const user = (sequelize) => {
             allowNull: false,
             unique: true
         },
-        password: {
+        profilePicture: {
             type: DataTypes.STRING,
             allowNull: false
         },

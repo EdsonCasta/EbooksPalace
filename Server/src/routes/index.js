@@ -4,6 +4,7 @@ const booksById = require('../controllers/getBooksById');
 const booksByName = require('../controllers/getBooksByName');
 const pagination = require('../controllers/pagination');
 const { postNewBook } = require('../controllers/postNewBook');
+const { verifyUser } = require("../controllers/verifyUser");
 const { filterByEditorial, filterByCategory, filterByAuthor } = require('../controllers/filters');
 const { filterByPrice, sortBooksAlphabetically } = require('../controllers/filtersOrder');
 const createUser = require('../controllers/signUp');
@@ -25,5 +26,6 @@ router.get('/alphabetical/:order', sortBooksAlphabetically);
 router.post('/signup', createUser);
 router.post('/login', login);
 router.post('/books', postNewBook)
+router.post('/userverify', verifyUser)
 
 module.exports = router;
