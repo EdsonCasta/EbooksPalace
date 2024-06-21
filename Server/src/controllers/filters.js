@@ -1,3 +1,18 @@
+const filterByGeneralSearch = (books, searchValue) => {
+    try {
+        return books.filter(book => {
+            const searchLower = searchValue.toLowerCase();
+            return (
+                book.name.toLowerCase().includes(searchLower) ||
+                book.author.toLowerCase().includes(searchLower) ||
+                book.editorial.toLowerCase().includes(searchLower)
+            );
+        });
+    } catch (error) {
+        throw new Error('Error al filtrar por búsqueda general');
+    }
+};
+
 const filterByEditorial = (books, partialEditorial) => {
     try {
         return books.filter(book => {
@@ -31,4 +46,26 @@ const filterByAuthor = (books, partialAuthor) => {
     }
 };
 
-module.exports = { filterByEditorial, filterByCategory, filterByAuthor };
+const filterPriceRange = (books, minimo, maximo) => {
+    let filteredBooks = [];
+
+    if (minimo !== undefined && maximo !== undefined) {
+        filteredBooks = books.filter(book => {
+            return book.price >= parseFloat(minimo) && book.price <= parseFloat(maximo);
+        });
+    } else if (minimo !== undefined) {
+        filteredBooks = books.filter(book => {
+            return book.price >= parseFloat(minimo);
+        });
+    } else if (maximo !== undefined) {
+        filteredBooks = books.filter(book => {
+            return book.price <= parseFloat(maximo);
+        });
+    } else {
+        filteredBooks = books;
+    }
+
+    return filteredBooks;
+};
+
+module.exports = { filterByGeneralSearch, filterByEditorial, filterByCategory, filterByAuthor, filterPriceRange };

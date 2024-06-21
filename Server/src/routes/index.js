@@ -3,7 +3,6 @@ const allBooks = require('../controllers/getAllBooks');
 const { getAllUsers } = require("../controllers/getAllUsers")
 const booksById = require('../controllers/getBooksById');
 const booksByName = require('../controllers/getBooksByName');
-const pagination = require('../controllers/pagination');
 const { postNewBook } = require('../controllers/postNewBook');
 const { verifyUser } = require("../controllers/verifyUser");
 const { filterByEditorial, filterByCategory, filterByAuthor } = require('../controllers/filters');
