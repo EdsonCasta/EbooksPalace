@@ -22,12 +22,22 @@ const user = (sequelize) => {
             allowNull: false
         },
         role: {
-            type: DataTypes.ENUM("Administrator", "Customer"),
+            type: DataTypes.ENUM("Administrator", "Customer", "Banned"),
             defaultValue: "Customer"
+        },
+    }, {
+        timestamps: true,
+        hooks: {
+            afterCreate: async (user, options) => {
+                const ShoppingCart = sequelize.models.ShoppingCart;
+                await ShoppingCart.create({
+                    userId: user.id
+                });
+            }
         }
-    },
-        { timestamps: true }
-    );
+    });
+
+    return Users;
 };
 
 module.exports = user;
