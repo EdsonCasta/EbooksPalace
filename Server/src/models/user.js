@@ -27,14 +27,14 @@ const user = (sequelize) => {
         },
     }, {
         timestamps: true,
-        hooks: {
+        /* hooks: {
             afterCreate: async (user, options) => {
                 const ShoppingCart = sequelize.models.ShoppingCart;
                 await ShoppingCart.create({
                     userId: user.id
                 });
             }
-        }
+        } */
     });
 
     return Users;
