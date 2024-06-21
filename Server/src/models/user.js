@@ -22,19 +22,20 @@ const user = (sequelize) => {
             allowNull: false
         },
         role: {
-            type: DataTypes.ENUM("Administrator", "Customer", "Banned"),
-            defaultValue: "Customer"
+            type: DataTypes.ENUM("Administrador", "Cliente", "Baneado"),
+            defaultValue: "Cliente"
         },
     }, {
         timestamps: true,
-        /* hooks: {
+        hooks: {
             afterCreate: async (user, options) => {
                 const ShoppingCart = sequelize.models.ShoppingCart;
                 await ShoppingCart.create({
-                    userId: user.id
+                    userId: user.id,
+                    status: "Activo"
                 });
             }
-        } */
+        }
     });
 
     return Users;
