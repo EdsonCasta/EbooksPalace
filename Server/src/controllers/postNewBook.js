@@ -3,9 +3,11 @@ const { Book } = require("../db");
 const postNewBook = async (req, res) => {
     const { name, editorial, category, author, price, image, description, file } = req.body;
 
+
+
     const validateType = (value, type) => {
         if (type === 'string') return typeof value === 'string';
-        if (type === 'number') return typeof value === 'number';
+        if (type === 'number') return !isNaN(parseFloat(value)) && isFinite(value);
         return false;
     };
 
@@ -32,13 +34,15 @@ const postNewBook = async (req, res) => {
             nextId = lastBook.id + 1;
         }
 
+        const parsedPrice = parseFloat(price).toFixed(2);//Se implementó a raíz de que llega el price como string desde el form
+
         const newBook = await Book.create({
             id: nextId,
             name,
             editorial,
             category,
             author,
-            price,
+            price: parsedPrice,
             image,
             description,
             file

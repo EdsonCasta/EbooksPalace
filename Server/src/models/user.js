@@ -1,13 +1,13 @@
 const { DataTypes } = require("sequelize");
 
 const user = (sequelize) => {
-    return sequelize.define("Users", {
+    return sequelize.define("user", {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        username: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
@@ -17,17 +17,28 @@ const user = (sequelize) => {
             allowNull: false,
             unique: true
         },
-        password: {
+        profilePicture: {
             type: DataTypes.STRING,
             allowNull: false
         },
         role: {
-            type: DataTypes.ENUM("Administrator", "Customer"),
-            defaultValue: "Customer"
+            type: DataTypes.ENUM("Administrador", "Cliente", "Baneado"),
+            defaultValue: "Cliente"
+        },
+    }, {
+        timestamps: true,
+        hooks: {
+            afterCreate: async (user, options) => {
+                const ShoppingCart = sequelize.models.ShoppingCart;
+                await ShoppingCart.create({
+                    userId: user.id,
+                    status: "Activo"
+                });
+            }
         }
-    },
-        { timestamps: true }
-    );
+    });
+
+    return User;
 };
 
 module.exports = user;
