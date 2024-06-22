@@ -12,11 +12,13 @@ const shoppingCart = (sequelize) => {
             references: {
                 model: "users",
                 key: "id",
-            }
+            },
+            allowNull: false
         },
         amount: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            defaultValue: 0
         },
         status: {
             type: DataTypes.ENUM("Activo", "Pagado"),

@@ -1,6 +1,7 @@
 const app = require('./src/app');
 const { conn } = require('./src/db');
 const saveBooks = require('./src/utils/saveBooks');
+const testCreateUser = require("./test/testCreateUser")
 
 const PORT = 3001;
 

@@ -1,36 +1,33 @@
-const { User } = require("../db")
+const { User } = require("../db");
 
 const verifyUser = async (req, res) => {
     try {
         const { email, name, profilePicture } = req.body;
 
-        console.log("Datos recibidos en el backend:", { email, name, profilePicture });
-
-        const [newUser, created] = await User.findOrCreate({
+        const existingUser = await User.findOne({
             where: { email },
-            defaults: {
-                name: name,
-                email: email,
-                profilePicture: profilePicture
-            }
         });
 
-        if (!created) {
-            console.log(newUser)
-            return res.status(200).json({ message: "Usuario existente", newUser })
+        if (existingUser) {
+            console.log("Usuario existente:", existingUser);
+            return res.status(200).json({ message: "Usuario existente", existingUser });
         }
 
-        if (created) {
-            console.log(newUser)
-            return res.status(201).json({ message: "Usuario registrado exitosamente", newUser })
-        }
+        const newUser = await User.create({
+            name,
+            email,
+            profilePicture,
+        });
+
+        console.log("Nuevo usuario:", newUser);
+        return res.status(201).json({ message: "Usuario registrado exitosamente", newUser });
     } catch (error) {
-        console.log("Error:", { error: error.message })
+        console.error("Error:", error.message);
+        return res.status(500).json({ error: "Error al procesar la solicitud" });
     }
-
-
 };
 
 module.exports = {
-    verifyUser
-}
+    verifyUser,
+};
+
