@@ -10,7 +10,6 @@ const user = (sequelize) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
         },
         email: {
             type: DataTypes.STRING,

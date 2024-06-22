@@ -11,6 +11,5 @@ conn.sync({ force: true })
         app.listen(PORT, () => {
             console.log(`Server listening on port ${PORT}`);
         })
-        testCreateUser();
     }).catch(error => console.error(error))
 
