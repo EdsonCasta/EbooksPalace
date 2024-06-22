@@ -6,6 +6,7 @@ const booksById = require('../controllers/getBooksById');
 const booksByName = require('../controllers/getBooksByName');
 const { postNewBook } = require('../controllers/postNewBook');
 const { verifyUser } = require("../controllers/verifyUser");
+const pagination = require("../controllers/pagination");
 const { filterByEditorial, filterByCategory, filterByAuthor } = require('../controllers/filters');
 const { filterByPrice, sortBooksAlphabetically } = require('../controllers/filtersOrder');
 const createUser = require('../controllers/signUp');

@@ -1,7 +1,7 @@
 const DataTypes = require("sequelize");
 
 const shoppingCart = (sequelize) => {
-    return sequelize.define("ShoppingCart", {
+    return sequelize.define("shoppingCart", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -10,7 +10,7 @@ const shoppingCart = (sequelize) => {
         userId: {
             type: DataTypes.INTEGER,
             references: {
-                model: user,
+                model: "users",
                 key: "id",
             }
         },
@@ -26,17 +26,15 @@ const shoppingCart = (sequelize) => {
         hooks: {
             afterUpdate: async (shoppingCart, options) => {
                 if (shoppingCart.status === "Pagado") {
-                    const ShoppingCart = sequelize.models.ShoppingCart;
                     await ShoppingCart.create({
                         userId: shoppingCart.userId,
                         status: "Activo"
-                    })
+                    });
                 }
             }
         }
-    })
-    return newCart;
-}
-module.exports = {
-    shoppingCart
-}
+    });
+    return ShoppingCart;
+};
+
+module.exports = shoppingCart;
