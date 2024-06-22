@@ -1,12 +1,11 @@
 const { Book } = require('../db');
-const pagination = require('./pagination');
-const booksByName = require("./getBooksByName")
 const { sortBooksAlphabetically, filterByPrice } = require("./filtersOrder")
 const { filterByEditorial, filterByCategory, filterByAuthor, filterPriceRange, filterByGeneralSearch } = require('./filters');
+const pagination = require('./pagination');
 
 const allBooks = async (req, res) => {
 
-    const { name, page = 1, productsByPage = 30, editorial, category, author, order, sort, minimo, maximo, search } = req.query;
+    const { page = 1, productsByPage = 30, editorial, category, author, order, sort, minimo, maximo, search } = req.query;
 
     try {
 
@@ -16,10 +15,6 @@ const allBooks = async (req, res) => {
 
         if (search) {
             filteredBooks = filterByGeneralSearch(filteredBooks, search);
-        }
-
-        if (name) {
-            filteredBooks = await booksByName(name)
         }
 
         if (editorial) {
