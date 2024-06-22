@@ -12,10 +12,10 @@ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}
 
 const Book = book(sequelize);
 const User = user(sequelize);
-const ShoppingCart = shoppingCart(sequelize, DataTypes);
+const ShoppingCart = shoppingCart(sequelize);
 
-User.hasMany(ShoppingCart, { foreignKey: "userId" });
-ShoppingCart.belongsTo(User, { foreigKey: "userId" });
+User.hasMany(ShoppingCart, { foreignKey: "userId", sourceKey: 'id' });
+ShoppingCart.belongsTo(User, { foreignKey: "userId", targetKey: 'id' });
 
 ShoppingCart.belongsToMany(Book, { through: "ShoppingCartBook", foreignKey: "shoppingCartId" });
 Book.belongsToMany(ShoppingCart, { through: "ShoppingCartBook", foreignKey: "bookId" });
