@@ -4,7 +4,7 @@ const verifyUser = async (req, res) => {
     try {
         const { email, name, profilePicture } = req.body;
 
-        console.log("Datos recibidos en el backend:", { email, name, profilePicture });
+        /* console.log("Datos recibidos en el backend:", { email, name, profilePicture }); */
 
         const [newUser, created] = await User.findOrCreate({
             where: { email },

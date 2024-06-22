@@ -29,11 +29,16 @@ const user = (sequelize) => {
         timestamps: true,
         hooks: {
             afterCreate: async (user, options) => {
-                const ShoppingCart = sequelize.models.ShoppingCart;
-                await ShoppingCart.create({
-                    userId: user.id,
-                    status: "Activo"
-                });
+                console.log('Usuario creado:', user.id);
+                const ShoppingCart = sequelize.models.shoppingCart;
+                if (ShoppingCart) {
+                    await ShoppingCart.create({
+                        userId: user.id,
+                        status: "Activo"
+                    });
+                } else {
+                    console.error("ShoppingCart model not found.");
+                }
             }
         }
     });
