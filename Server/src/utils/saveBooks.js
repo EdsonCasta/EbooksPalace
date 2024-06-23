@@ -3,7 +3,7 @@ const { Book } = require('../db');
 
 const saveBooks = async () => {
     try {
-        const { data } = await axios("http://127.0.0.1:5500/datosEBookspalace.json");
+        const { data } = await axios("https://raw.githubusercontent.com/MairaZamer/EbooksPalacejson/main/datosEBookspalace.json");
 
 
         for (let book of data) {
