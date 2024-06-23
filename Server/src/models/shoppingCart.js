@@ -27,8 +27,9 @@ const shoppingCart = (sequelize) => {
     }, {
         hooks: {
             afterUpdate: async (shoppingCart, options) => {
+                console.log(shoppingCart)
                 if (shoppingCart.status === "Pagado") {
-                    await ShoppingCart.create({
+                    await sequelize.models.shoppingCart.create({
                         userId: shoppingCart.userId,
                         status: "Activo"
                     });
