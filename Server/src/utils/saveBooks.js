@@ -1,9 +1,10 @@
+require('dotenv').config();
 const axios = require('axios');
 const { Book } = require('../db');
 
 const saveBooks = async () => {
     try {
-        const { data } = await axios("https://raw.githubusercontent.com/MairaZamer/EbooksPalacejson/main/datosEBookspalace.json");
+        const { data } = await axios(process.env.BOOKS_API_URL);
 
 
         for (let book of data) {
