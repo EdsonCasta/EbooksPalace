@@ -2,7 +2,7 @@ const { Cart, CartBook, Book, User } = require("../db");
 
 const addToCart = async (req, res) => {
     // const userId = req.users.id; 
-    const { userId, bookId, amount } = req.body;
+    const { userId, bookId } = req.body;
 
     try {
         const user = await User.findByPk(userId);
@@ -19,58 +19,26 @@ const addToCart = async (req, res) => {
             where: { userId, status: "Activo" }
         });
 
-        let [cartBook, cartBookCreated] = await CartBook.findOrCreate({
-            where: { cartId: cart.id, bookId: bookId },
-            defaults: { amount }
+        const cartBook = await CartBook.findOne({
+            where: { cartId: cart.id, bookId: bookId }
         });
 
-        if (!cartBookCreated) {
-            cartBook.amount += amount;
-            await cartBook.save();
+        if (cartBook) {
+            return res.status(400).json({ message: "Libro ya está en el carrito" });
+        } else {
+            const newCartBook = await CartBook.create({
+                cartId: cart.id,
+                bookId: bookId,
+            });
+        
+            return res.status(200).json({ message: "Artículo agregado al carrito", newCartBook });
         }
-
-        return res.status(200).json({ message: "Artículo agregado al carrito", cartBook });
     } catch (error) {
         console.error("Error al agregar al carrito:", error.message);
         return res.status(500).json({ error: "Error al procesar la solicitud" });
     }
 };
 
-const updateCartItem = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { amount } = req.body;
 
-        const cartItem = await ShoppingCart.findByPk(id);
 
-        if (!cartItem) {
-            return res.status(404).json({ message: "Artículo no encontrado en el carrito" });
-        }
-
-        cartItem.amount = amount;
-        await cartItem.save();
-
-        return res.status(200).json({ message: "Cantidad actualizada", cartItem });
-    } catch (error) {
-        console.error("Error al actualizar el carrito:", error.message);
-        return res.status(500).json({ error: "Error al procesar la solicitud" });
-    }
-};
-
-const getCart = async (req, res) => {
-    try {
-        const { userId } = req.params;
-
-        const cartItems = await ShoppingCart.findAll({
-            where: { userId },
-            include: [Book]
-        });
-
-        return res.status(200).json({ cartItems });
-    } catch (error) {
-        console.error("Error al obtener el carrito:", error.message);
-        return res.status(500).json({ error: "Error al procesar la solicitud" });
-    }
-};
-
-module.exports = { addToCart, updateCartItem, getCart };
+module.exports = { addToCart };
