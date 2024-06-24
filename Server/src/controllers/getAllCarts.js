@@ -1,8 +1,8 @@
-const { ShoppingCart } = require("../db");
+const { Cart } = require("../db");
 
 const getAllCarts = async (req, res) => {
     try {
-        const getCarts = await ShoppingCart.findAll();
+        const getCarts = await Cart.findAll();
         if (!getCarts) {
             res.status(400).json("No se encontraron carritos")
         }
