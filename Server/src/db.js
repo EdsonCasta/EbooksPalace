@@ -2,7 +2,8 @@ require("dotenv").config();
 const { Sequelize, DataTypes } = require("sequelize");
 const book = require("./models/book");
 const user = require("./models/user");
-const shoppingCart = require("./models/shoppingCart");
+const cart = require("./models/cart");
+const cartBook = require("./models/cartBook");
 
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
@@ -12,13 +13,14 @@ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}
 
 const Book = book(sequelize);
 const User = user(sequelize);
-const ShoppingCart = shoppingCart(sequelize);
+const Cart = cart(sequelize);
+const CartBook = cartBook(sequelize);
 
-User.hasMany(ShoppingCart, { foreignKey: "userId", sourceKey: 'id' });
-ShoppingCart.belongsTo(User, { foreignKey: "userId", targetKey: 'id' });
+User.hasMany(Cart, { foreignKey: "userId", sourceKey: 'id' });
+Cart.belongsTo(User, { foreignKey: "userId", targetKey: 'id' });
 
-ShoppingCart.belongsToMany(Book, { through: "ShoppingCartBook", foreignKey: "shoppingCartId" });
-Book.belongsToMany(ShoppingCart, { through: "ShoppingCartBook", foreignKey: "bookId" });
+Cart.belongsToMany(Book, { through: CartBook, foreignKey: "cartId" });
+Book.belongsToMany(Cart, { through: CartBook, foreignKey: "bookId" });
 
 User.belongsToMany(Book, { through: "UserBook" });
 Book.belongsToMany(User, { through: "UserBook" });
@@ -27,5 +29,6 @@ module.exports = {
     conn: sequelize,
     Book,
     User,
-    ShoppingCart
+    Cart,
+    CartBook
 };

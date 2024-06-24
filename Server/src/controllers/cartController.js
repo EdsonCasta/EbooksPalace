@@ -1,19 +1,35 @@
-const { ShoppingCart, Book } = require("../models");
+const { Cart, CartBook, Book, User } = require("../db");
 
 const addToCart = async (req, res) => {
+    // const userId = req.users.id; 
+    const { userId, bookId, amount } = req.body;
+
     try {
-        const { userId, bookId, amount } = req.body;
-
-        let cartItem = await ShoppingCart.findOne({ where: { userId, bookId } });
-
-        if (cartItem) {
-            cartItem.amount += amount;
-            await cartItem.save();
-        } else {
-            cartItem = await ShoppingCart.create({ userId, bookId, amount });
+        const user = await User.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
         }
 
-        return res.status(200).json({ message: "Artículo agregado al carrito", cartItem });
+        const book = await Book.findByPk(bookId);
+        if (!book) {
+            return res.status(404).json({ message: "Libro no encontrado" });
+        }
+
+        let [cart, created] = await Cart.findOrCreate({
+            where: { userId, status: "Activo" }
+        });
+
+        let [cartBook, cartBookCreated] = await CartBook.findOrCreate({
+            where: { cartId: cart.id, bookId: bookId },
+            defaults: { amount }
+        });
+
+        if (!cartBookCreated) {
+            cartBook.amount += amount;
+            await cartBook.save();
+        }
+
+        return res.status(200).json({ message: "Artículo agregado al carrito", cartBook });
     } catch (error) {
         console.error("Error al agregar al carrito:", error.message);
         return res.status(500).json({ error: "Error al procesar la solicitud" });

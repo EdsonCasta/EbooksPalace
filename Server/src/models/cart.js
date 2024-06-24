@@ -1,7 +1,7 @@
-const DataTypes = require("sequelize");
+const { DataTypes } = require("sequelize");
 
-const shoppingCart = (sequelize) => {
-    return sequelize.define("shoppingCart", {
+const cart = (sequelize) => {
+    return sequelize.define("cart", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -13,12 +13,7 @@ const shoppingCart = (sequelize) => {
                 model: "users",
                 key: "id",
             },
-            allowNull: false
-        },
-        amount: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0
+            allowNull: false    
         },
         status: {
             type: DataTypes.ENUM("Activo", "Pagado"),
@@ -26,17 +21,16 @@ const shoppingCart = (sequelize) => {
         }
     }, {
         hooks: {
-            afterUpdate: async (shoppingCart, options) => {
-                if (shoppingCart.status === "Pagado") {
-                    await ShoppingCart.create({
-                        userId: shoppingCart.userId,
+            afterUpdate: async (cart, options) => {
+                if (cart.status === "Pagado") {
+                    await sequelize.models.cart.create({
+                        userId: cart.userId,
                         status: "Activo"
                     });
                 }
             }
         }
     });
-    return ShoppingCart;
 };
 
-module.exports = shoppingCart;
+module.exports = cart;
