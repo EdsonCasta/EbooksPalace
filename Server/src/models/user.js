@@ -28,7 +28,8 @@ const user = (sequelize) => {
         timestamps: true,
         hooks: {
             afterCreate: async (user, options) => {
-                const ShoppingCart = sequelize.models.shoppingCart;
+                // console.log('Usuario creado:', user.id);
+                const ShoppingCart = sequelize.models.cart;
                 if (ShoppingCart) {
                     await ShoppingCart.create({
                         userId: user.id,
@@ -40,8 +41,6 @@ const user = (sequelize) => {
             }
         }
     });
-
-    return User;
 };
 
 module.exports = user;
