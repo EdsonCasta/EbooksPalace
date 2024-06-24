@@ -18,11 +18,6 @@ const cartBook = (sequelize) => {
             },
             allowNull: false
         },
-        amount: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 1
-        }
     }, {
         timestamps: true
     });
