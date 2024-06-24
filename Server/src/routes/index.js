@@ -10,8 +10,6 @@ const login = require('../controllers/login');
 const { postNewBook } = require('../controllers/postNewBook');
 const { verifyUser } = require("../controllers/verifyUser");
 const cors = require("cors");
-const { putUserBan } = require('../controllers/putUserBanned');
-const { putUserCustomer } = require('../controllers/putUserCustomer');
 
 const router = Router();
 router.use(cors());
@@ -24,9 +22,5 @@ router.post('/signup', createUser);
 router.post('/login', login);
 router.post('/books', postNewBook);
 router.post('/userverify', verifyUser);
-router.put('/carts/:id/status', putCartState);
-router.put('/users/:id/status/admin', putUserAdmin);
-router.put('/users/:id/status/ban', putUserBan);
-router.put('/users/:id/status/customer', putUserCustomer);
 
 module.exports = router;
