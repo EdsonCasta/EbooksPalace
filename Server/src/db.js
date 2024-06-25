@@ -5,11 +5,20 @@ const user = require("./models/user");
 const cart = require("./models/cart");
 const cartBook = require("./models/cartBook");
 
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
-
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/ebookspalace`, {
-    logging: false,
-});
+const sequelize = new Sequelize({
+    database: process.env.DB_DATABASE,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: process.env.DB_SSL === 'true' ? {
+        require: true,
+        rejectUnauthorized: false // Ajusta esto según tu configuración de certificados SSL
+      } : false
+    }
+  });
 
 const Book = book(sequelize);
 const User = user(sequelize);
