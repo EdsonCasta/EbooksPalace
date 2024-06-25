@@ -26,19 +26,21 @@ const addToCart = async (req, res) => {
         if (cartBook) {
             return res.status(400).json({ message: "Libro ya está en el carrito" });
         } else {
-            const newCartBook = await CartBook.create({
+            await CartBook.create({
                 cartId: cart.id,
                 bookId: bookId,
             });
+            const bookDetails = await Book.findByPk(bookId);
         
-            return res.status(200).json({ message: "Artículo agregado al carrito", newCartBook });
+            return res.status(200).json({ 
+                message: "Artículo agregado al carrito", 
+                book: bookDetails
+            });
         }
     } catch (error) {
         console.error("Error al agregar al carrito:", error.message);
         return res.status(500).json({ error: "Error al procesar la solicitud" });
     }
 };
-
-
 
 module.exports = { addToCart };
