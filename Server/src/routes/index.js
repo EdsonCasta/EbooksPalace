@@ -12,7 +12,7 @@ const { verifyUser } = require("../controllers/verifyUser");
 const cors = require("cors");
 const { putUserBan } = require('../controllers/putUserBanned');
 const { putUserCustomer } = require('../controllers/putUserCustomer');
-const { addToCart } = require("../controllers/cartController");
+const { addToCart, removeItems } = require("../controllers/cartController");
 const { getCategories } = require('../controllers/categoryController');
 
 const stripe = require('stripe')('sk_test_51PUuD2P5B5kABXMb7qMmwaVcVSPvwoFGdllwCaaprxdcNKBeC4REXwKoQu2yGVYHDu6jKNONCG5GONOu989FnGt500n4RiJkmt');
@@ -31,6 +31,7 @@ router.post('/login', login);
 router.post('/books', postNewBook);
 router.post('/userverify', verifyUser);
 router.post('/cart', addToCart);
+router.post('/remove', removeItems);
 router.put('/carts/:id/status', putCartState);
 router.put('/users/:id/status/admin', putUserAdmin);
 router.put('/users/:id/status/ban', putUserBan);
