@@ -35,6 +35,12 @@ Book.belongsToMany(Cart, { through: CartBook, foreignKey: "bookId" });
 User.belongsToMany(Book, { through: "UserBook" });
 Book.belongsToMany(User, { through: "UserBook" });
 
+Cart.hasMany(CartBook, { foreignKey: "cartId" });
+CartBook.belongsTo(Cart, { foreignKey: "cartId" });
+
+Book.hasMany(CartBook, { foreignKey: "bookId" });
+CartBook.belongsTo(Book, { foreignKey: "bookId" });
+
 module.exports = {
   conn: sequelize,
   Book,
