@@ -4,11 +4,10 @@ const saveBooks = require('./src/utils/saveBooks');
 
 const PORT = 3001;
 
-conn.sync({ force: true })
+conn.sync()
     .then(() => {
-        console.log('Database synced successfully.');
-    })
-    .catch(error => {
-        console.error('Error syncing database:', error);
-    });
+        app.listen(PORT, () => {
+            console.log(`Server listening on port ${PORT}`);
+        })
+    }).catch(error => console.error("error"))
 

@@ -18,7 +18,7 @@ const sequelize = new Sequelize({
       rejectUnauthorized: false // Ajusta esto según tu configuración de certificados SSL
     } : false
   },
-  logging: false
+  logging: false // Opcional: desactivar el registro de consultas
 });
 
 const Book = book(sequelize);
