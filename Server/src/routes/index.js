@@ -41,9 +41,8 @@ router.put('/users/:id/status/customer', putUserCustomer);
 
 router.post('/create-checkout-session', async (req, res) => {
     try {
-        const items = req.body; // Recibe los ítems del carrito del frontend
+        const items = req.body; // viene del front
 
-        // Mapear los ítems del carrito a los line items de Stripe
         const lineItems = items.map(item => ({
             price_data: {
                 currency: 'usd',
@@ -51,7 +50,7 @@ router.post('/create-checkout-session', async (req, res) => {
                     name: item.name,
                     images: [item.image]
                 },
-                unit_amount: item.price * 100, // Stripe usa centavos
+                unit_amount: item.price * 100, // Stripe usa centavos //NO OLVIDAR
             },
             quantity: 1,
         }));
