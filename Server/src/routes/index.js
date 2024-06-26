@@ -39,13 +39,24 @@ router.put('/users/:id/status/customer', putUserCustomer);
 
 router.post('/create-checkout-session', async (req, res) => {
     try {
-        const session = await stripe.checkout.sessions.create({
-            line_items: [
-                {
-                    price: 'price_1PUyaPP5B5kABXMbkCe9eLqW',
-                    quantity: 1,
+        const items = req.body; // Recibe los ítems del carrito del frontend
+
+        // Mapear los ítems del carrito a los line items de Stripe
+        const lineItems = items.map(item => ({
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: item.name,
+                    images: [item.image]
                 },
-            ],
+                unit_amount: item.price * 100, // Stripe usa centavos
+            },
+            quantity: 1,
+        }));
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: lineItems,
             mode: 'payment',
             success_url: `${YOUR_DOMAIN}?success=true`,
             cancel_url: `${YOUR_DOMAIN}?canceled=true`,
@@ -56,5 +67,6 @@ router.post('/create-checkout-session', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
 
 module.exports = router;
