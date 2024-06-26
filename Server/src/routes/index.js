@@ -14,6 +14,7 @@ const { putUserBan } = require('../controllers/putUserBanned');
 const { putUserCustomer } = require('../controllers/putUserCustomer');
 const { addToCart, removeItems } = require("../controllers/cartController");
 const { getCategories } = require('../controllers/categoryController');
+const getUserCart = require('../controllers/getUserById');
 
 const stripe = require('stripe')('sk_test_51PUuD2P5B5kABXMb7qMmwaVcVSPvwoFGdllwCaaprxdcNKBeC4REXwKoQu2yGVYHDu6jKNONCG5GONOu989FnGt500n4RiJkmt');
 const YOUR_DOMAIN = 'http://localhost:5173';
@@ -25,7 +26,8 @@ router.get('/books', allBooks);
 router.get('/books/:id', booksById);
 router.get('/users', getAllUsers);
 router.get('/carts', getAllCarts);
-router.get('/categories', getCategories)
+router.get('/categories', getCategories);
+router.get('/cart/:userId', getUserCart);
 router.post('/signup', createUser);
 router.post('/login', login);
 router.post('/books', postNewBook);
