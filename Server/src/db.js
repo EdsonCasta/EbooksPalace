@@ -6,19 +6,20 @@ const cart = require("./models/cart");
 const cartBook = require("./models/cartBook");
 
 const sequelize = new Sequelize({
-    database: process.env.DB_DATABASE,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: process.env.DB_SSL === 'true' ? {
-        require: true,
-        rejectUnauthorized: false // Ajusta esto según tu configuración de certificados SSL
-      } : false
-    }
-  });
+  database: process.env.DB_DATABASE,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: process.env.DB_SSL === 'true' ? {
+      require: true,
+      rejectUnauthorized: false // Ajusta esto según tu configuración de certificados SSL
+    } : false
+  },
+  logging: false
+});
 
 const Book = book(sequelize);
 const User = user(sequelize);
@@ -35,9 +36,9 @@ User.belongsToMany(Book, { through: "UserBook" });
 Book.belongsToMany(User, { through: "UserBook" });
 
 module.exports = {
-    conn: sequelize,
-    Book,
-    User,
-    Cart,
-    CartBook
+  conn: sequelize,
+  Book,
+  User,
+  Cart,
+  CartBook
 };
