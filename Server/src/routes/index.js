@@ -12,7 +12,7 @@ const { verifyUser } = require("../controllers/verifyUser");
 const cors = require("cors");
 const { putUserBan } = require('../controllers/putUserBanned');
 const { putUserCustomer } = require('../controllers/putUserCustomer');
-const { addToCart, removeItems } = require("../controllers/cartController");
+const { addToCart, removeItems, emptyCart } = require("../controllers/cartController");
 const { getCategories } = require('../controllers/categoryController');
 const getUserCart = require('../controllers/getUserById');
 
@@ -38,6 +38,7 @@ router.put('/carts/:id/status', putCartState);
 router.put('/users/:id/status/admin', putUserAdmin);
 router.put('/users/:id/status/ban', putUserBan);
 router.put('/users/:id/status/customer', putUserCustomer);
+router.delete('/cart/empty', emptyCart);
 
 router.post('/create-checkout-session', async (req, res) => {
     try {

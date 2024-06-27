@@ -31,9 +31,9 @@ const addToCart = async (req, res) => {
                 bookId: bookId,
             });
             const bookDetails = await Book.findByPk(bookId);
-        
-            return res.status(200).json({ 
-                message: "Artículo agregado al carrito", 
+
+            return res.status(200).json({
+                message: "Artículo agregado al carrito",
                 book: bookDetails
             });
         }
@@ -78,4 +78,25 @@ const removeItems = async (req, res) => {
     }
 };
 
-module.exports = { addToCart, removeItems };
+const emptyCart = async (req, res) => {
+    const { userId } = req.body;
+    try {
+        let cartWithItems = await Cart.findOne({
+            where: { userId, status: "Activo" }
+        });
+        if (!cartWithItems) {
+            return res.status(404).json({ message: "No se encontró el carrito" });
+        }
+
+        await CartBook.destroy({
+            where: { cartId: cartWithItems.id }
+        });
+
+        return res.status(200).json({ message: "Carrito vaciado exitosamente" });
+    } catch (error) {
+        console.error("Error al vaciar el carrito:", error.message);
+        return res.status(500).json({ error: "Error al procesar la solicitud" });
+    }
+}
+
+module.exports = { addToCart, removeItems, emptyCart };
