@@ -87,9 +87,14 @@ const removeItems = async (req, res) => {
 };
 
 const emptyCart = async (req, res) => {
-    const { userId } = req.body;
     try {
-        let cartWithItems = await Cart.findOne({
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ error: 'userId es requerido' });
+        }
+
+        const cartWithItems = await Cart.findOne({
             where: { userId, status: "Activo" }
         });
         if (!cartWithItems) {
