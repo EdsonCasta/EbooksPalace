@@ -44,13 +44,14 @@ const addToCart = async (req, res) => {
 };
 
 const removeItems = async (req, res) => {
-    const { bookId } = req.body;
-
+    
+    const { userId, bookId } = req.body;
+    console.log('Datos recibidos en el endpoint /remove:', { userId, bookId });
     try {
-        // const user = await User.findByPk(userId);
-        // if (!user) {
-        //     return res.status(404).json({ message: "Usuario no encontrado" });
-        // }
+        const user = await User.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
 
         const cart = await Cart.findOne({
             where: { status: "Activo" }
