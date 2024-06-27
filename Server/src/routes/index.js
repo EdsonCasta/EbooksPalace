@@ -42,7 +42,7 @@ router.delete('/cart/empty', emptyCart);
 
 router.post('/create-checkout-session', async (req, res) => {
     try {
-        const items = req.body; // viene del front
+        const items = req.body; 
 
         const lineItems = items.map(item => ({
             price_data: {
@@ -51,7 +51,7 @@ router.post('/create-checkout-session', async (req, res) => {
                     name: item.name,
                     images: [item.image]
                 },
-                unit_amount: item.price * 100, // Stripe usa centavos //NO OLVIDAR
+                unit_amount: item.price * 100, 
             },
             quantity: 1,
         }));

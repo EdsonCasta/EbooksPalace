@@ -53,18 +53,26 @@ const removeItems = async (req, res) => {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
 
-        const cart = await Cart.findOne({
-            where: { status: "Activo" }
-        });
+        // const cart = await Cart.findOne({
+        //     where: { status: "Activo" }
+        // });
 
-        if (!cart) {
-            return res.status(404).json({ message: "Carrito no encontrado" });
-        }
+        // if (!cart) {
+        //     return res.status(404).json({ message: "Carrito no encontrado" });
+        // }
 
         const cartBook = await CartBook.findOne({
-            where: { cartId: cart.id, bookId: bookId }
+            where: {
+                // cartId: cart.id,
+                bookId: bookId,
+            },
+            include: [{
+                model: Cart,
+                where: {
+                    status: "Activo"
+                }
+            }]
         });
-
         if (!cartBook) {
             return res.status(404).json({ message: "Libro no encontrado en el carrito" });
         }
