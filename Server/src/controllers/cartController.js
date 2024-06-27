@@ -78,9 +78,10 @@ const removeItems = async (req, res) => {
 };
 
 const emptyCart = async (req, res) => {
+    const { userId } = req.body;
     try {
         let cartWithItems = await Cart.findOne({
-            where: { status: "Activo" }
+            where: { userId, status: "Activo" }
         });
         if (!cartWithItems) {
             return res.status(404).json({ message: "No se encontró el carrito" });
