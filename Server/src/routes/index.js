@@ -4,7 +4,7 @@ const booksById = require('../controllers/getBooksById');
 const { getAllUsers } = require("../controllers/getAllUsers");
 const { getAllCarts } = require("../controllers/getAllCarts");
 const { putCartState } = require("../controllers/putCartState");
-const { putUserAdmin } = require("../controllers/putUserAdmin")
+const { putUserAdmin } = require("../controllers/putUserAdmin");
 const createUser = require('../controllers/signUp');
 const login = require('../controllers/login');
 const { postNewBook } = require('../controllers/postNewBook');
@@ -15,6 +15,8 @@ const { putUserCustomer } = require('../controllers/putUserCustomer');
 const { addToCart, removeItems, emptyCart } = require("../controllers/cartController");
 const { getCategories } = require('../controllers/categoryController');
 const getUserCart = require('../controllers/getUserById');
+const { getDownloadBook } = require('../controllers/getDownloadBook');
+const { getPaidBooks } = require('../controllers/getPaidBooks');
 
 const stripe = require('stripe')('sk_test_51PUuD2P5B5kABXMb7qMmwaVcVSPvwoFGdllwCaaprxdcNKBeC4REXwKoQu2yGVYHDu6jKNONCG5GONOu989FnGt500n4RiJkmt');
 const YOUR_DOMAIN = 'http://localhost:5173';
@@ -28,6 +30,8 @@ router.get('/users', getAllUsers);
 router.get('/carts', getAllCarts);
 router.get('/categories', getCategories);
 router.get('/cart/:userId', getUserCart);
+router.get('/download/:bookId', getDownloadBook);
+router.get('/paid-cart/:userId', getPaidBooks);
 router.post('/signup', createUser);
 router.post('/login', login);
 router.post('/books', postNewBook);
@@ -42,7 +46,7 @@ router.delete('/cart/empty', emptyCart);
 
 router.post('/create-checkout-session', async (req, res) => {
     try {
-        const items = req.body; 
+        const items = req.body;
 
         const lineItems = items.map(item => ({
             price_data: {
@@ -51,7 +55,7 @@ router.post('/create-checkout-session', async (req, res) => {
                     name: item.name,
                     images: [item.image]
                 },
-                unit_amount: item.price * 100, 
+                unit_amount: item.price * 100,
             },
             quantity: 1,
         }));
@@ -60,8 +64,8 @@ router.post('/create-checkout-session', async (req, res) => {
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: `${YOUR_DOMAIN}?success=true`,
-            cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+            success_url: `${YOUR_DOMAIN}/home?success=true`,
+            cancel_url: `${YOUR_DOMAIN}/home?canceled=true`,
         });
 
         res.json({ url: session.url });
@@ -69,6 +73,5 @@ router.post('/create-checkout-session', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
 
 module.exports = router;

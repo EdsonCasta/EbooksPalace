@@ -1,10 +1,12 @@
-const { Cart } = require("../db");
+const { Cart, Book } = require("../db");
 
 const putCartState = async (req, res) => {
     try {
         const { id } = req.params;
 
-        let cartExists = await Cart.findByPk(id);
+        let cartExists = await Cart.findByPk(id, {
+            include: Book
+        });
 
         if (!cartExists) {
             return res.status(404).json({ error: "Cart not found" });
