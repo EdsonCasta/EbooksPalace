@@ -28,7 +28,6 @@ const user = (sequelize) => {
         timestamps: true,
         hooks: {
             afterCreate: async (user, options) => {
-                // console.log('Usuario creado:', user.id);
                 const ShoppingCart = sequelize.models.cart;
                 if (ShoppingCart) {
                     await ShoppingCart.create({
