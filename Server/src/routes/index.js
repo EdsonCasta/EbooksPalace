@@ -64,7 +64,7 @@ router.post('/create-checkout-session', async (req, res) => {
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: `${YOUR_DOMAIN}/home?success=true`,
+            success_url: `${YOUR_DOMAIN}/payment-success`,
             cancel_url: `${YOUR_DOMAIN}/home?canceled=true`,
         });
 

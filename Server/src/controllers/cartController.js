@@ -44,7 +44,7 @@ const addToCart = async (req, res) => {
 };
 
 const removeItems = async (req, res) => {
-    
+
     const { userId, bookId } = req.body;
     console.log('Datos recibidos en el endpoint /remove:', { userId, bookId });
     try {
