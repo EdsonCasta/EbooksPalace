@@ -1,12 +1,12 @@
 const { google } = require("googleapis");
 const { User } = require("../db");
 const nodemailer = require("nodemailer");
-require('dotenv').config(); 
+require('dotenv').config();
 
 const oauth2Client = new google.auth.OAuth2(
   process.env.EMAIL_CLIENT_ID,
   process.env.EMAIL_CLIENT_SECRET,
-  "https://developers.google.com/oauthplayground" 
+  "https://developers.google.com/oauthplayground"
 );
 
 oauth2Client.setCredentials({
@@ -78,6 +78,7 @@ El equipo de Ebooks Palace`,
 const verifyUser = async (req, res) => {
   try {
     const { email, name, profilePicture } = req.body;
+    console.log(email)
 
     const existingUser = await User.findOne({
       where: { email },
@@ -95,7 +96,7 @@ const verifyUser = async (req, res) => {
       profilePicture,
     });
 
-    
+
     await enviarCorreoBienvenida(email);
 
     return res
