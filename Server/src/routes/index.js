@@ -17,6 +17,7 @@ const { getCategories } = require('../controllers/categoryController');
 const getUserCart = require('../controllers/getUserById');
 const { getDownloadBook } = require('../controllers/getDownloadBook');
 const { getPaidBooks } = require('../controllers/getPaidBooks');
+const { getTransHistory } = require('../controllers/getTransactionHistory');
 
 const stripe = require('stripe')('sk_test_51PUuD2P5B5kABXMb7qMmwaVcVSPvwoFGdllwCaaprxdcNKBeC4REXwKoQu2yGVYHDu6jKNONCG5GONOu989FnGt500n4RiJkmt');
 const YOUR_DOMAIN = 'http://localhost:5173';
@@ -32,6 +33,7 @@ router.get('/categories', getCategories);
 router.get('/cart/:userId', getUserCart);
 router.get('/download/:bookId', getDownloadBook);
 router.get('/paid-cart/:userId', getPaidBooks);
+router.get('/history/:userId', getTransHistory);
 router.post('/signup', createUser);
 router.post('/login', login);
 router.post('/books', postNewBook);
