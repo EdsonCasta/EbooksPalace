@@ -1,20 +1,19 @@
 const { google } = require("googleapis");
 const { User } = require("../db");
 const nodemailer = require("nodemailer");
-require('dotenv').config(); // Cargar variables del .env
+require('dotenv').config(); 
 
-// Crear un OAuth2 client
 const oauth2Client = new google.auth.OAuth2(
   process.env.EMAIL_CLIENT_ID,
   process.env.EMAIL_CLIENT_SECRET,
-  "https://developers.google.com/oauthplayground" // Redireccionamiento autorizado en Google Cloud Console
+  "https://developers.google.com/oauthplayground" 
 );
 
 oauth2Client.setCredentials({
   refresh_token: process.env.EMAIL_REFRESH_TOKEN,
 });
 
-// Función para obtener el accessToken
+
 async function getAccessToken() {
   try {
     const { token } = await oauth2Client.getAccessToken();
@@ -25,7 +24,7 @@ async function getAccessToken() {
   }
 }
 
-// Definir la función para enviar el correo de bienvenida
+
 async function enviarCorreoBienvenida(destinatario) {
   const accessToken = await getAccessToken();
 
@@ -96,7 +95,7 @@ const verifyUser = async (req, res) => {
       profilePicture,
     });
 
-    // Enviar correo de bienvenida al nuevo usuario
+    
     await enviarCorreoBienvenida(email);
 
     return res
