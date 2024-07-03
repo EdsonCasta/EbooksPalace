@@ -17,6 +17,7 @@ const { getCategories } = require('../controllers/categoryController');
 const getUserCart = require('../controllers/getUserById');
 const { getDownloadBook } = require('../controllers/getDownloadBook');
 const { getPaidBooks } = require('../controllers/getPaidBooks');
+// const { createReview, getAllReviews, updateReviews, getPurchasedBooks } = require('../controllers/reviewController');
 
 const stripe = require('stripe')('sk_test_51PUuD2P5B5kABXMb7qMmwaVcVSPvwoFGdllwCaaprxdcNKBeC4REXwKoQu2yGVYHDu6jKNONCG5GONOu989FnGt500n4RiJkmt');
 const YOUR_DOMAIN = 'http://localhost:5173';
@@ -43,6 +44,10 @@ router.put('/users/:id/status/admin', putUserAdmin);
 router.put('/users/:id/status/ban', putUserBan);
 router.put('/users/:id/status/customer', putUserCustomer);
 router.delete('/cart/empty', emptyCart);
+// router.post('/reviews', createReview);
+// router.get('/reviews', getAllReviews);
+// router.put('/reviews/:id', updateReviews);
+// router.get('/purchasedBooks/:userId', getPurchasedBooks); 
 
 router.post('/create-checkout-session', async (req, res) => {
     try {
