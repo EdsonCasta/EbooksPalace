@@ -18,6 +18,8 @@ const getUserCart = require('../controllers/getUserById');
 const { getDownloadBook } = require('../controllers/getDownloadBook');
 const { getPaidBooks } = require('../controllers/getPaidBooks');
 const { getTransHistory } = require('../controllers/getTransactionHistory');
+const EditBook = require('../controllers/putBookEdit');
+const BookStatus = require('../controllers/putBookStatus');
 // const { createReview, getAllReviews, updateReviews, getPurchasedBooks } = require('../controllers/reviewController');
 
 const stripe = require('stripe')('sk_test_51PUuD2P5B5kABXMb7qMmwaVcVSPvwoFGdllwCaaprxdcNKBeC4REXwKoQu2yGVYHDu6jKNONCG5GONOu989FnGt500n4RiJkmt');
@@ -45,6 +47,8 @@ router.put('/carts/:id/status', putCartState);
 router.put('/users/:id/status/admin', putUserAdmin);
 router.put('/users/:id/status/ban', putUserBan);
 router.put('/users/:id/status/customer', putUserCustomer);
+router.put('/edit/:id', EditBook);
+router.put('/book/:id/status', BookStatus);
 router.delete('/cart/empty', emptyCart);
 // router.post('/reviews', createReview);
 // router.get('/reviews', getAllReviews);
