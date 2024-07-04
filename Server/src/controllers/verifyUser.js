@@ -78,7 +78,6 @@ El equipo de Ebooks Palace`,
 const verifyUser = async (req, res) => {
   try {
     const { email, name, profilePicture } = req.body;
-    console.log(email)
 
     const existingUser = await User.findOne({
       where: { email },
@@ -95,7 +94,6 @@ const verifyUser = async (req, res) => {
       email,
       profilePicture,
     });
-
 
     await enviarCorreoBienvenida(email);
 
