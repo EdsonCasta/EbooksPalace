@@ -18,7 +18,7 @@ const getUserCart = require('../controllers/getUserById');
 const { getDownloadBook } = require('../controllers/getDownloadBook');
 const { getPaidBooks } = require('../controllers/getPaidBooks');
 const { getTransHistory } = require('../controllers/getTransactionHistory');
-// const { createReview, getAllReviews, updateReviews, getPurchasedBooks } = require('../controllers/reviewController');
+const { createReview, getReview, updateReview, getReviews } = require('../controllers/reviewController');
 
 const stripe = require('stripe')('sk_test_51PUuD2P5B5kABXMb7qMmwaVcVSPvwoFGdllwCaaprxdcNKBeC4REXwKoQu2yGVYHDu6jKNONCG5GONOu989FnGt500n4RiJkmt');
 const YOUR_DOMAIN = 'http://localhost:3001/';
@@ -35,21 +35,22 @@ router.get('/cart/:userId', getUserCart);
 router.get('/download/:bookId', getDownloadBook);
 router.get('/paid-cart/:userId', getPaidBooks);
 router.get('/history/:userId', getTransHistory);
+router.get('/users/:userId/review', getReview);
+router.get('/reviews', getReviews)
 router.post('/signup', createUser);
 router.post('/login', login);
 router.post('/books', postNewBook);
 router.post('/userverify', verifyUser);
 router.post('/cart', addToCart);
 router.post('/remove', removeItems);
+router.post('/users/:userId/review', createReview);
 router.put('/carts/:id/status', putCartState);
 router.put('/users/:id/status/admin', putUserAdmin);
 router.put('/users/:id/status/ban', putUserBan);
 router.put('/users/:id/status/customer', putUserCustomer);
+router.put('/users/:userId/review', updateReview);
 router.delete('/cart/empty', emptyCart);
-// router.post('/reviews', createReview);
-// router.get('/reviews', getAllReviews);
-// router.put('/reviews/:id', updateReviews);
-// router.get('/purchasedBooks/:userId', getPurchasedBooks); 
+
 
 router.post('/create-checkout-session', async (req, res) => {
     try {
