@@ -18,6 +18,8 @@ const { getDownloadBook } = require('../controllers/getDownloadBook');
 const { getPaidBooks } = require('../controllers/getPaidBooks');
 const { getTransHistory } = require('../controllers/getTransactionHistory');
 const { createReview, getReview, updateReview, getReviews } = require('../controllers/reviewController');
+const EditBook = require('../controllers/putBookEdit');
+const BookStatus = require('../controllers/putBookStatus');
 
 const stripe = require('stripe')('sk_test_51PUuD2P5B5kABXMb7qMmwaVcVSPvwoFGdllwCaaprxdcNKBeC4REXwKoQu2yGVYHDu6jKNONCG5GONOu989FnGt500n4RiJkmt');
 const YOUR_DOMAIN = 'http://localhost:3001/';
