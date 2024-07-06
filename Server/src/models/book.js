@@ -16,7 +16,7 @@ const book = (sequelize) => {
             allowNull: false
         },
         category: {
-            type: DataTypes.ENUM("Terror", "Comedy", "Romance", "Education", "Self-Help"),
+            type: DataTypes.STRING,
             allowNull: false
         },
         author: {
@@ -37,6 +37,10 @@ const book = (sequelize) => {
         file: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        state: {
+            type: DataTypes.ENUM("Activo", "Inactivo"),
+            defaultValue: "Activo"
         }
     },
         { timestamps: true }

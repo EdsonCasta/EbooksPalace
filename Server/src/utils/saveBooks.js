@@ -6,7 +6,6 @@ const saveBooks = async () => {
     try {
         const { data } = await axios(process.env.BOOKS_API_URL);
 
-
         for (let book of data) {
             Book.create({
                 id: book.id,

@@ -1,17 +1,18 @@
 const filterByGeneralSearch = (books, searchValue) => {
     try {
-        return books.filter(book => {
-            const searchLower = searchValue.toLowerCase();
-            return (
-                book.name.toLowerCase().includes(searchLower) ||
-                book.author.toLowerCase().includes(searchLower) ||
-                book.editorial.toLowerCase().includes(searchLower)
-            );
-        });
+        const searchLower = searchValue.toLowerCase();
+        const filteredBooks = books.filter(book => 
+            book.name.toLowerCase().includes(searchLower) ||
+            book.author.toLowerCase().includes(searchLower) ||
+            book.editorial.toLowerCase().includes(searchLower)
+        );
+        
+        return filteredBooks;
     } catch (error) {
         throw new Error('Error al filtrar por búsqueda general');
     }
 };
+
 
 const filterByEditorial = (books, partialEditorial) => {
     try {
