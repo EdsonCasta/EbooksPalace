@@ -5,7 +5,7 @@ const user = require("./models/user");
 const cart = require("./models/cart");
 const cartBook = require("./models/cartBook");
 const UserBookModel = require("./models/UserBook");
-// const review = require("./models/review")
+const review = require("./models/review")
 
 const sequelize = new Sequelize({
   database: process.env.DB_DATABASE,
@@ -28,7 +28,7 @@ const User = user(sequelize);
 const Cart = cart(sequelize);
 const CartBook = cartBook(sequelize);
 const UserBook = UserBookModel(sequelize);
-// const Review = review(sequelize); 
+const Review = review(sequelize); 
 
 User.hasMany(Cart, { foreignKey: "userId", sourceKey: 'id' });
 Cart.belongsTo(User, { foreignKey: "userId", targetKey: 'id' });
@@ -45,12 +45,8 @@ CartBook.belongsTo(Cart, { foreignKey: "cartId" });
 Book.hasMany(CartBook, { foreignKey: "bookId" });
 CartBook.belongsTo(Book, { foreignKey: "bookId" });
 
-// Review.belongsTo(User, { foreignKey: 'userId' });
-// Review.belongsTo(Book, { foreignKey: 'bookId' });
-// Review.belongsTo(Cart, { foreignKey: 'cartId' });
-
-UserBook.belongsTo(User);
-UserBook.belongsTo(Book);
+User.hasMany(Review, { foreignKey: 'userId' });
+Review.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = {
   conn: sequelize,
@@ -59,5 +55,5 @@ module.exports = {
   Cart,
   CartBook,
   UserBook,
-  // Review
+  Review
 };
