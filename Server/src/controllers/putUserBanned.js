@@ -10,7 +10,7 @@ const putUserBan = async (req, res) => {
             return res.status(404).json({ error: "Usuario no encontrado" });
         }
 
-        userExists.role = userExists.role === "Baneado" ? "Desbaneado" : "Baneado";
+        userExists.role = userExists.role === "Baneado" ? "Cliente" : "Baneado";
 
         await userExists.save();
 
