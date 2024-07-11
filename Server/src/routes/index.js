@@ -22,7 +22,7 @@ const EditBook = require('../controllers/putBookEdit');
 const BookStatus = require('../controllers/putBookStatus');
 
 const stripe = require('stripe')('sk_test_51PUuD2P5B5kABXMb7qMmwaVcVSPvwoFGdllwCaaprxdcNKBeC4REXwKoQu2yGVYHDu6jKNONCG5GONOu989FnGt500n4RiJkmt');
-const YOUR_DOMAIN = 'https://ebooks-palace.vercel.app/';
+const YOUR_DOMAIN = 'https://ebooks-palace.vercel.app';
 const router = Router();
 
 router.use(cors());
